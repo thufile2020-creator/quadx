@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#112b28" />
+  <meta name="description" content="QUADx — a simple carbon reporting dashboard for small businesses." />
+  <title>QUADx | Carbon Intelligence</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="script.js" defer></script>
+</head>
+<body>
+<div class="app-shell">
+  <div class="mobile-shade" id="mobileShade"></div>
+  <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+    <a href="#overview" class="brand" aria-label="QUADx home"><span class="brand-mark">Q<span class="brand-spark">✦</span></span><span><strong>QUADx</strong><small>CARBON INTELLIGENCE</small></span></a>
+    <div class="workspace"><span class="workspace-avatar">N</span><span><strong id="sidebarCompany">Northstar Components</strong><small>Business workspace</small></span><span class="workspace-more">⌄</span></div>
+    <div class="nav-caption">WORKSPACE</div>
+    <nav class="nav-links">
+      <button class="nav-link active" data-view="overview" aria-current="page"><span class="nav-icon">▦</span>Overview</button>
+      <button class="nav-link" data-view="documents"><span class="nav-icon">▤</span>Documents<span class="nav-dot"></span></button>
+      <button class="nav-link" data-view="analytics"><span class="nav-icon">▥</span>Carbon analytics</button>
+      <button class="nav-link" data-view="simulator"><span class="nav-icon">◇</span>Reduction simulator</button>
+      <button class="nav-link" data-view="reports"><span class="nav-icon">▧</span>Reports</button>
+    </nav>
+    <div class="nav-caption settings-caption">PREFERENCES</div>
+    <nav class="nav-links"><button class="nav-link" data-view="settings"><span class="nav-icon">⚙</span>Settings</button></nav>
+    <div class="sidebar-bottom"><div class="sidebar-tip"><span class="tip-light">✳</span><strong>Small changes. Big impact.</strong><p>Track emissions, spot opportunities, make progress.</p></div><div class="sidebar-footer"><span class="status-dot"></span> Prototype mode <span class="version">v0.1</span></div></div>
+  </aside>
+
+  <main class="main-area">
+    <header class="topbar">
+      <div class="topbar-left"><button id="menuToggle" class="menu-toggle" aria-label="Open navigation" aria-expanded="false">☰</button><span class="crumb">Workspace</span><span class="crumb-divider">/</span><strong id="currentPageLabel">Overview</strong></div>
+      <div class="topbar-right"><span class="demo-badge"><span class="status-dot"></span> Demo environment</span><button class="btn btn-secondary" type="button" id="accountButton">Connect backend</button><span class="header-avatar">N</span></div>
+    </header>
+    <div class="page-content">
+      <section class="page active" id="page-overview" data-page="overview">
+        <div class="page-heading"><div><div class="eyebrow">YOUR SUSTAINABILITY WORKSPACE</div><h1>Carbon overview <span class="wave">✳</span></h1><p>See where your emissions come from and what you can improve.</p></div><button class="btn btn-primary" data-navigate="documents">＋ Add business record</button></div>
+        <div class="welcome-banner"><div class="welcome-copy"><div class="welcome-tag"><span class="status-dot"></span> YOUR CLIMATE SNAPSHOT</div><h2>Better business starts<br />with better data.</h2><p>Turn everyday records into clear emissions insights, one bill at a time.</p><button class="btn btn-white" data-navigate="documents">Upload your first bill <span>↗</span></button></div><div class="banner-art" aria-hidden="true"><div class="art-circle art-circle-one"></div><div class="art-circle art-circle-two"></div><div class="art-core">✳</div><div class="art-particle p1">✦</div><div class="art-particle p2">✳</div><div class="art-particle p3">✦</div></div></div>
+        <div class="section-label"><h2>Emissions at a glance</h2><span id="currentMonthLabel" class="pill-label">This month</span></div>
+        <div class="stat-grid">
+          <article class="stat-card"><div class="stat-header"><span>Total estimated CO₂</span><span class="stat-icon green">↗</span></div><div class="stat-value" id="statTotal">—</div><div class="stat-sub">kg CO₂ this month</div><div class="stat-foot">From electricity and owned fuel records</div></article>
+          <article class="stat-card"><div class="stat-header"><span>Electricity emissions</span><span class="stat-icon yellow">ϟ</span></div><div class="stat-value" id="statElectricity">—</div><div class="stat-sub">kg CO₂ · Scope 2 (illustrative)</div><div class="stat-foot" id="electricityUsage">— kWh recorded</div></article>
+          <article class="stat-card"><div class="stat-header"><span>Fuel emissions</span><span class="stat-icon blue">♧</span></div><div class="stat-value" id="statFuel">—</div><div class="stat-sub">kg CO₂ · Scope 1 (illustrative)</div><div class="stat-foot" id="fuelUsage">Company-owned use only</div></article>
+          <article class="stat-card"><div class="stat-header"><span>Records tracked</span><span class="stat-icon purple">▤</span></div><div class="stat-value" id="statDocs">—</div><div class="stat-sub">All reporting periods</div><div class="stat-foot">Review source values before reporting</div></article>
+        </div>
+        <div class="content-grid"><article class="panel trend-panel"><div class="panel-head"><div><h3>Emissions trend</h3><p>Monthly estimated CO₂ from recorded activity</p></div><span class="panel-tag">Last 6 months</span></div><div class="chart-holder"><div class="chart-y-label">kg CO₂</div><svg class="trend-chart" id="trendChart" viewBox="0 0 620 240" role="img" aria-label="Emissions trend chart" preserveAspectRatio="none"></svg><div class="chart-months" id="chartMonths"></div></div></article><article class="panel breakdown-panel"><div class="panel-head"><div><h3>Emission sources</h3><p>This month's contribution</p></div></div><div class="donut-wrap"><div class="donut" id="sourceDonut"><div class="donut-hole"><strong id="donutTotal">—</strong><small>kg CO₂</small></div></div></div><div class="source-legend"><div><span><i class="legend-dot electricity-dot"></i> Electricity</span><strong id="sourceElectricity">—</strong></div><div><span><i class="legend-dot fuel-dot"></i> Fuel</span><strong id="sourceFuel">—</strong></div></div></article></div>
+        <div class="panel recent-panel"><div class="panel-head"><div><h3>Recent business records</h3><p>Activity used to calculate your footprint</p></div><button class="text-button" data-navigate="documents">View all records ↗</button></div><div class="table-scroll"><table><thead><tr><th>Record</th><th>Activity</th><th>Consumption</th><th>Date</th><th>Estimated CO₂</th></tr></thead><tbody id="recentRows"></tbody></table></div></div>
+        <p class="footnote">Illustrative prototype data and emission factors. These estimates are not a verified corporate GHG inventory.</p>
+      </section>
+
+      <section class="page" id="page-documents" data-page="documents">
+        <div class="page-heading"><div><div class="eyebrow">COLLECT & ORGANIZE</div><h1>Business documents</h1><p>Add bills and consumption records to build your emissions profile.</p></div><button class="btn btn-primary" id="manualEntryBtn">＋ Add record manually</button></div>
+        <div class="notice"><span>ⓘ</span><div><strong>AI bill scanner — manual confirmation required.</strong><p>TXT bills work without extra OCR software. For images and PDFs, install the optional OCR requirements. Always check detected values before saving. Signed-in records are saved in the Flask database; unsigned records remain browser demo data.</p></div></div>
+        <div class="upload-zone" id="uploadZone" tabindex="0" role="button" aria-label="Select a business document to upload"><span class="upload-symbol">⇧</span><h3>Drop a bill here, or click to browse</h3><p>Electricity bills, diesel/petrol receipts · TXT, PDF, JPG, PNG, WEBP</p><span class="btn btn-secondary">Choose file</span><input type="file" id="fileInput" accept=".txt,.pdf,.png,.jpg,.jpeg,.webp,text/plain,application/pdf,image/jpeg,image/png,image/webp" hidden /></div>
+        <p id="ocrStatus" class="integration-status" role="status"></p><form class="panel record-form hidden" id="recordForm"><div class="panel-head"><div><h3>Review and save activity</h3><p>Enter the figures shown on your bill or receipt</p></div><button class="icon-button" type="button" id="closeRecordForm" aria-label="Close form">✕</button></div><div class="form-grid"><label>Record type<select id="recordType" required><option value="electricity">Purchased electricity (Scope 2)</option><option value="diesel">Company-owned diesel (Scope 1)</option><option value="petrol">Company-owned petrol (Scope 1)</option></select></label><label>Consumption <span id="unitLabel">(kWh)</span><input id="recordAmount" type="number" min="0.01" step="any" placeholder="e.g. 850" required /></label><label>Record date<input id="recordDate" type="date" required /></label><label>Bill / record name<input id="recordName" type="text" maxlength="90" placeholder="e.g. November electricity bill" required /></label></div><div class="record-estimate"><div><small>Estimated CO₂, using illustrative factor</small><strong id="recordEstimate">0.00 kg CO₂</strong></div><small id="factorDescription">0.70 kg CO₂ / kWh (demo only)</small></div><div class="form-actions"><button type="button" class="btn btn-secondary" id="cancelRecord">Cancel</button><button type="submit" class="btn btn-primary">Save record →</button></div></form>
+        <div class="panel records-panel"><div class="panel-head"><div><h3>All records <span class="count-pill" id="recordCount">0</span></h3><p id="recordsStorageLabel">Browser demo records until you connect an account.</p></div><button class="text-button" id="downloadCsv">↓ Export CSV</button></div><div class="table-scroll"><table><thead><tr><th>Record</th><th>Type</th><th>Consumption</th><th>Date</th><th>Estimated CO₂</th><th></th></tr></thead><tbody id="allRecordsRows"></tbody></table></div></div>
+      </section>
+
+      <section class="page" id="page-analytics" data-page="analytics"><div class="page-heading"><div><div class="eyebrow">MEASURE WHAT MATTERS</div><h1>Carbon analytics</h1><p>Explore your emissions trends and the activities behind them.</p></div><button class="btn btn-secondary" data-navigate="reports">View report ↗</button></div><div class="analysis-grid"><div class="panel analysis-hero"><span class="metric-eyebrow">TOTAL RECORDED EMISSIONS</span><div class="analysis-total" id="analyticsTotal">—</div><span class="unit-lg">kg CO₂ · all periods</span><div class="analysis-note">Based on saved electricity and company-owned fuel activity records.</div></div><div class="panel scopes-panel"><h3>By reporting scope</h3><div class="scope-row"><span><i class="legend-dot electricity-dot"></i> Scope 2 · Electricity</span><strong id="scope2Value">—</strong></div><div class="mini-track"><div id="scope2Bar"></div></div><div class="scope-row"><span><i class="legend-dot fuel-dot"></i> Scope 1 · Owned fuel</span><strong id="scope1Value">—</strong></div><div class="mini-track"><div id="scope1Bar"></div></div><p class="footnote">Scope 3 is not included in this version.</p></div></div><div class="panel"><div class="panel-head"><div><h3>Monthly activity breakdown</h3><p>Emissions calculated from each month's saved records</p></div></div><div class="table-scroll"><table><thead><tr><th>Month</th><th>Electricity CO₂</th><th>Fuel CO₂</th><th>Total CO₂</th></tr></thead><tbody id="monthlyRows"></tbody></table></div></div>
+<div class="panel integration-panel">
+ <div class="panel-head"><div><h3>Member 3 · Carbon Detective & Recommendations</h3><p>Connected to the Python AI engine through Flask. Detective input below is editable sample data.</p></div></div>
+ <label for="detectiveInput"><strong>Monthly records (JSON, oldest first)</strong></label>
+ <textarea id="detectiveInput" rows="6" spellcheck="false">[{"electricity_kwh":1000,"products":500},{"electricity_kwh":1100,"products":550},{"electricity_kwh":1500,"products":500}]</textarea>
+ <div class="integration-buttons"><button type="button" class="btn btn-primary" id="runDetective">Run Carbon Detective</button><button type="button" class="btn btn-secondary" id="getRecommendations">Get Carbon Suggestions</button></div>
+ <pre id="aiResults" class="integration-output" role="status">Run a check to see Member 3's Python result.</pre>
+ <p class="footnote">The anomaly detector is a simple statistical heuristic. Suggestions are offline rules, not generated by an online LLM.</p>
+</div></section>
+
+      <section class="page" id="page-simulator" data-page="simulator"><div class="page-heading"><div><div class="eyebrow">PLAN YOUR NEXT MOVE</div><h1>Reduction simulator <span class="wave">✳</span></h1><p>Explore what reducing electricity consumption could mean for your emissions.</p></div></div><div class="sim-layout"><div class="panel sim-control"><div class="panel-head"><div><h3>Design your scenario</h3><p>Change one assumption and see an instant estimate</p></div></div><div class="sim-input"><label for="savingSlider">Electricity usage reduction</label><div class="slider-heading"><strong id="sliderPct">15%</strong><span>of recorded kWh</span></div><input id="savingSlider" type="range" min="0" max="50" step="1" value="15" /><div class="range-labels"><span>0%</span><span>25%</span><span>50%</span></div></div><div class="sim-details"><div><span>Current month electricity usage</span><strong id="simKwh">—</strong></div><div><span>Estimated after reduction</span><strong id="simNewKwh">—</strong></div><div><span>Assumed factor</span><strong>0.70 kg CO₂/kWh*</strong></div></div><div class="notice compact"><span>ⓘ</span><p>Scenario only: projections must not be reported as reductions already achieved.</p></div></div><div class="panel sim-result"><span class="metric-eyebrow">YOUR POTENTIAL IMPACT</span><div class="sim-leaf">✳</div><p>Estimated monthly CO₂ savings</p><div class="sim-savings" id="simSavings">—</div><span class="unit-lg">kg CO₂ / month</span><div class="simulation-compare"><div><span>Current</span><strong id="simBefore">—</strong></div><div class="mini-track"><div class="sim-before-bar"></div></div><div><span>Scenario</span><strong id="simAfter">—</strong></div><div class="mini-track"><div id="simAfterBar"></div></div></div><button class="btn btn-primary" data-navigate="documents">Add more accurate data ↗</button></div></div><p class="footnote">*0.70 is an illustrative demonstration factor, not a verified reporting factor. Production reports must use the applicable, documented factor and reporting year.</p></section>
+
+      <section class="page" id="page-reports" data-page="reports"><div class="page-heading"><div><div class="eyebrow">SHARE YOUR PROGRESS</div><h1>Carbon reports</h1><p>Preview your emissions summary and save it as a PDF using your browser.</p></div><div class="integration-buttons"><button class="btn btn-secondary" id="downloadPassportButton" type="button">↓ Download Carbon Passport (Member 4)</button><button class="btn btn-primary" id="printReportBtn">↓ Print / Save as PDF</button></div></div><div class="notice"><span>ⓘ</span><div><strong>Preliminary emissions summary — not third-party verified.</strong><p>This demo excludes Scope 3 and uses illustrative emission factors. Replace them with authoritative, documented factors before using a report for supplier disclosure.</p></div></div><div class="report-preview panel"><div class="report-top"><div class="report-logo">Q<span>✳</span> <small>QUADx</small></div><span class="report-state">PRELIMINARY</span></div><div class="report-title"><span>EMISSIONS SUMMARY</span><h2 id="reportCompany">Northstar Components</h2><p id="reportPeriod">Reporting snapshot</p></div><div class="report-metrics"><div><span>Estimated CO₂</span><strong id="reportTotal">—</strong><small>kg CO₂</small></div><div><span>Scope 1 · Fuel</span><strong id="reportScope1">—</strong><small>kg CO₂</small></div><div><span>Scope 2 · Electricity</span><strong id="reportScope2">—</strong><small>kg CO₂</small></div></div><div class="report-bottom"><h3>Method and assumptions</h3><p>Activity data × illustrative CO₂ emission factor. Electricity: 0.70 kg CO₂/kWh; diesel: 2.70 kg CO₂/L; petrol: 2.31 kg CO₂/L. Records are user-entered or seeded demo data. Scope 3, non-CO₂ gases, and independent verification are excluded.</p><div class="report-watermark">Generated with QUADx · Frontend demo</div></div></div></section>
+
+      <section class="page" id="page-settings" data-page="settings"><div class="page-heading"><div><div class="eyebrow">PREFERENCES</div><h1>Workspace settings</h1><p>Customize the company details displayed in your dashboard and report.</p></div></div><form class="panel settings-panel" id="settingsForm"><div class="panel-head"><div><h3>Company profile</h3><p>Used on dashboard navigation and generated summaries</p></div></div><label>Business name<input id="companyInput" type="text" maxlength="70" required /></label><button class="btn btn-primary" type="submit">Save changes</button></form><div class="panel settings-panel reset-panel"><h3>Demo data</h3><p>Restore the original sample records and demonstration settings.</p><button class="btn btn-danger-outline" type="button" id="resetDemo">Reset demo records</button></div></section>
+    </div>
+  </main>
+</div>
+<div class="toast" role="status" aria-live="polite" id="toast"></div>
+<section class="print-report" id="printableReport" aria-hidden="true"></section>
+<dialog id="accountDialog" class="account-dialog">
+ <div class="account-head"><h2>Connect to Flask backend</h2><button type="button" id="authClose" class="icon-button" aria-label="Close">✕</button></div>
+ <p>Register or sign in to save activity records to the SQLite database.</p>
+ <form id="accountForm">
+  <label><input id="registerMode" type="checkbox" /> Create a new account</label>
+  <label id="authNameRow" class="hidden">Your name <input id="authName" type="text" maxlength="100" placeholder="Your name" /></label>
+  <label>Email <input id="authEmail" type="email" autocomplete="username" required /></label>
+  <label>Password <input id="authPassword" type="password" minlength="8" autocomplete="current-password" required /></label>
+  <button class="btn btn-primary" type="submit" id="authSubmit">Sign in</button>
+ </form>
+ <p class="footnote">Use test data only. Never commit passwords, secrets or real customer bills to GitHub.</p>
+</dialog>
+</body>
+</html>

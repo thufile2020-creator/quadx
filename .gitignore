@@ -1,0 +1,12 @@
+# Backend-only guardrails (root .gitignore also applies)
+.env
+.venv/
+venv/
+__pycache__/
+.pytest_cache/
+*.py[cod]
+instance/
+*.db
+*.sqlite3
+uploads/
+requirements-installed.flag
