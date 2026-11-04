@@ -1,0 +1,20 @@
+{
+  "electricity_kwh": {
+    "factor": "0.70",
+    "unit": "kg CO2e/kWh",
+    "scope": "Scope 2",
+    "source": "ILLUSTRATIVE DEMO VALUE — NOT A VERIFIED INDIAN GRID FACTOR",
+    "factor_year": "demo",
+    "geography": "demonstration-only",
+    "verified_for_reporting": false
+  },
+  "diesel_litres": {
+    "factor": "2.70",
+    "unit": "kg CO2e/litre",
+    "scope": "Scope 1",
+    "source": "ILLUSTRATIVE DEMO VALUE — NOT A VERIFIED FUEL FACTOR",
+    "factor_year": "demo",
+    "geography": "demonstration-only",
+    "verified_for_reporting": false
+  }
+}
